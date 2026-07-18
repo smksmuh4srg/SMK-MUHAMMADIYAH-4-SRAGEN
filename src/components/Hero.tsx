@@ -5,7 +5,7 @@
 
 import React from "react";
 import { ArrowRight, GraduationCap, Users, Award, ShieldCheck, BookmarkCheck } from "lucide-react";
-import { SCHOOL_INFO } from "../data";
+import { useContent } from "../context/ContentContext";
 import schoolHeroImg from "../assets/images/school_hero_campus_1784355094217.jpg";
 
 interface HeroProps {
@@ -14,9 +14,10 @@ interface HeroProps {
 }
 
 export default function Hero({ onLearnMore, onRegister }: HeroProps) {
+  const { schoolInfo } = useContent();
   const stats = [
     { label: "Siswa Aktif", value: "850+", icon: Users, color: "text-hijau-primary bg-hijau-light/70" },
-    { label: "Akreditasi BAN-SM", value: "A (Unggul)", icon: ShieldCheck, color: "text-oranye-primary bg-oranye-light/70" },
+    { label: "Akreditasi BAN-SM", value: `A (Unggul)`, icon: ShieldCheck, color: "text-oranye-primary bg-oranye-light/70" },
     { label: "Guru & Asesor", value: "48+", icon: Award, color: "text-hijau-primary bg-hijau-light/70" },
     { label: "Peluang Kerja & Kuliah", value: "96%", icon: BookmarkCheck, color: "text-oranye-primary bg-oranye-light/70" },
   ];
@@ -46,14 +47,13 @@ export default function Hero({ onLearnMore, onRegister }: HeroProps) {
                 Selamat datang
               </span>
               <span className="text-4xl sm:text-5xl md:text-6.5xl font-black text-hijau-primary block uppercase leading-[1.05]">
-                SMK MUHAMMADIYAH 4<br />
-                SRAGEN
+                {schoolInfo.nama}
               </span>
             </h1>
 
             {/* Sub-tagline */}
             <p className="mt-6 text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto lg:mx-0" id="hero-description">
-              Mencetak generasi muda yang <span className="text-oranye-primary font-bold">Terampil</span>, memiliki{" "}
+              {schoolInfo.tagline}. Mencetak generasi muda yang <span className="text-oranye-primary font-bold">Terampil</span>, memiliki{" "}
               <span className="text-hijau-primary font-bold">Karakter Islami</span> kuat, unggul secara iptek, dan siap bersaing di dunia kerja maupun perguruan tinggi.
             </p>
 

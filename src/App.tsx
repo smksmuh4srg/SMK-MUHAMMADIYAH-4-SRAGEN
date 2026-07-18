@@ -18,12 +18,29 @@ import Gallery from "./components/Gallery";
 import SPMB from "./components/SPMB";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import AdminPanel from "./components/AdminPanel";
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>("home");
+  const [isAdminView, setIsAdminView] = useState<boolean>(false);
+
+  // Check URL hash to switch to/from Admin Panel
+  useEffect(() => {
+    const checkHash = () => {
+      setIsAdminView(window.location.hash === "#admin");
+    };
+    
+    // Initial check
+    checkHash();
+    
+    window.addEventListener("hashchange", checkHash);
+    return () => window.removeEventListener("hashchange", checkHash);
+  }, []);
 
   // Dynamic viewport scroll listener to highlight active nav link on scroll
   useEffect(() => {
+    if (isAdminView) return;
+
     const handleScrollIntersection = () => {
       const sections = ["home", "about", "visimisi", "programs", "gallery", "contact"];
       const scrollPosition = window.scrollY + 160; // offset factor
@@ -43,7 +60,7 @@ export default function App() {
 
     window.addEventListener("scroll", handleScrollIntersection);
     return () => window.removeEventListener("scroll", handleScrollIntersection);
-  }, []);
+  }, [isAdminView]);
 
   // Custom slow-motion slide-up animations on scroll reveal
   useEffect(() => {
@@ -126,6 +143,23 @@ export default function App() {
     slowScrollTo(0, 1650);
     setActiveSection("home");
   };
+
+  if (isAdminView) {
+    return (
+      <div className="min-h-screen flex flex-col font-sans" id="root-app-wrapper">
+        {/* 1. Header Navigation */}
+        <Navbar activeSection="admin" setActiveSection={() => {}} />
+
+        {/* 2. Admin Panel Dashboard View */}
+        <main className="flex-grow pt-16 bg-slate-50" id="main-content">
+          <AdminPanel />
+        </main>
+
+        {/* 3. Footer Branding */}
+        <Footer onScrollToTop={handleScrollToTop} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col font-sans" id="root-app-wrapper">

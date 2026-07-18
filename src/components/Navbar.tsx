@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Menu, X, PhoneCall, GraduationCap, ChevronDown } from "lucide-react";
+import { useContent } from "../context/ContentContext";
 import SchoolLogo from "./SchoolLogo";
 
 interface NavbarProps {
@@ -13,6 +14,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ activeSection, setActiveSection }: NavbarProps) {
+  const { schoolInfo } = useContent();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -227,7 +229,7 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
           {/* Call to Action Buttons */}
           <div className="hidden lg:flex items-center gap-3" id="nav-actions">
             <a
-              href="https://wa.me/6281234567890?text=Halo%20SMK%20Muhammadiyah%204%20Sragen%2C%20saya%20ingin%20bertanya%20mengenai%20penerimaan%20siswa%20baru..."
+              href={`https://wa.me/${schoolInfo.whatsapp}?text=Halo%20SMK%20Muhammadiyah%204%20Sragen%2C%20saya%20ingin%20bertanya%20mengenai%20penerimaan%20siswa%20baru...`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs font-semibold text-oranye-primary hover:text-oranye-dark bg-oranye-pastel border border-oranye-light px-3 py-2 rounded-lg transition-colors"
@@ -321,7 +323,7 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
             
             <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/6281234567890?text=Halo%20SMK%20Muhammadiyah%204%20Sragen..."
+                href={`https://wa.me/${schoolInfo.whatsapp}?text=Halo%20SMK%20Muhammadiyah%204%20Sragen...`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full text-sm font-semibold text-oranye-primary bg-oranye-pastel border border-oranye-light px-4 py-3 rounded-xl hover:bg-oranye-light transition-colors"

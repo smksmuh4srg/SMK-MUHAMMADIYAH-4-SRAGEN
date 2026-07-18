@@ -5,7 +5,7 @@
 
 import React from "react";
 import { Facebook, Instagram, Youtube, Send, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
-import { SCHOOL_INFO } from "../data";
+import { useContent } from "../context/ContentContext";
 import SchoolLogo from "./SchoolLogo";
 
 interface FooterProps {
@@ -13,6 +13,7 @@ interface FooterProps {
 }
 
 export default function Footer({ onScrollToTop }: FooterProps) {
+  const { schoolInfo } = useContent();
   const currentYear = new Date().getFullYear();
 
   const handleNavClick = (id: string) => {
@@ -44,13 +45,13 @@ export default function Footer({ onScrollToTop }: FooterProps) {
               <SchoolLogo size="md" textColorClass="text-white" />
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-md">
-              SMK Muhammadiyah 4 Sragen menyelenggarakan pendidikan vokasi terakreditasi A yang unggul, bermartabat, berlandaskan akidah Islamiyah, serta berorientasi penuh pada kesiapan kerja abad ke-21.
+              {schoolInfo.nama} menyelenggarakan pendidikan vokasi terakreditasi {schoolInfo.akreditasi} yang unggul, bermartabat, berlandaskan akidah Islamiyah, serta berorientasi penuh pada kesiapan kerja abad ke-21.
             </p>
             
             {/* Social Media Links */}
             <div className="flex items-center gap-3" id="footer-socials">
               <a
-                href="https://wa.me/6281234567890"
+                href={`https://wa.me/${schoolInfo.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="h-10 w-10 rounded-xl bg-slate-800 hover:bg-hijau-primary hover:text-white flex items-center justify-center transition-colors shadow-2xs"
@@ -118,15 +119,15 @@ export default function Footer({ onScrollToTop }: FooterProps) {
             <ul className="space-y-4 text-xs sm:text-sm text-slate-400" id="footer-contact-list">
               <li className="flex gap-3">
                 <MapPin className="w-5 h-5 text-hijau-secondary flex-shrink-0" />
-                <span className="font-semibold leading-relaxed">{SCHOOL_INFO.alamat}</span>
+                <span className="font-semibold leading-relaxed">{schoolInfo.alamat}</span>
               </li>
               <li className="flex gap-3">
                 <Phone className="w-5 h-5 text-oranye-primary flex-shrink-0" />
-                <span className="font-bold">{SCHOOL_INFO.telepon}</span>
+                <span className="font-bold">{schoolInfo.telepon}</span>
               </li>
               <li className="flex gap-3">
                 <Mail className="w-5 h-5 text-hijau-secondary flex-shrink-0" />
-                <span className="font-semibold">{SCHOOL_INFO.email}</span>
+                <span className="font-semibold">{schoolInfo.email}</span>
               </li>
             </ul>
           </div>
@@ -136,8 +137,10 @@ export default function Footer({ onScrollToTop }: FooterProps) {
         {/* Bottom copyright section */}
         <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-500" id="footer-bottom">
           <div className="text-center md:text-left">
-            <p>&copy; {currentYear} {SCHOOL_INFO.nama}. Hak Cipta Dilindungi Undang-Undang.</p>
-            <p className="mt-1 text-[10px] text-slate-600 uppercase tracking-wide">NPSN: {SCHOOL_INFO.npsn} | Akreditasi: {SCHOOL_INFO.akreditasi}</p>
+            <p>&copy; {currentYear} {schoolInfo.nama}. Hak Cipta Dilindungi Undang-Undang.</p>
+            <p className="mt-1 text-[10px] text-slate-600 uppercase tracking-wide">
+              NPSN: {schoolInfo.npsn} | Akreditasi: {schoolInfo.akreditasi} | <a href="#admin" className="hover:text-hijau-secondary underline transition-colors">Panel Admin</a>
+            </p>
           </div>
 
           {/* Scroll to top button */}

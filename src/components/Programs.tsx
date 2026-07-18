@@ -5,10 +5,11 @@
 
 import React, { useState } from "react";
 import * as LucideIcons from "lucide-react";
-import { PROGRAMS_DATA } from "../data";
+import { useContent } from "../context/ContentContext";
 import { ProgramKeahlian } from "../types";
 
 export default function Programs() {
+  const { programs } = useContent();
   const [activeTabId, setActiveTabId] = useState<string>("tkj");
 
   // Dynamic Lucide icon helper
@@ -21,10 +22,18 @@ export default function Programs() {
     return <LucideIcons.BookOpen className={className} />;
   };
 
-  const selectedProgram = PROGRAMS_DATA.find((p) => p.id === activeTabId) || PROGRAMS_DATA[0];
+  if (!programs || programs.length === 0) {
+    return (
+      <div className="py-20 text-center text-slate-400 font-bold">
+        Memuat Program Studi...
+      </div>
+    );
+  }
+
+  const selectedProgram = programs.find((p) => p.id === activeTabId) || programs[0];
 
   return (
-    <section id="programs" className="py-20 md:py-28 bg-white scroll-mt-10">
+    <section id="programs" className="py-20 md:py-28 bg-transparent scroll-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -41,7 +50,7 @@ export default function Programs() {
 
         {/* Tab Selector buttons */}
         <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 slowmo-reveal" id="programs-tabs">
-          {PROGRAMS_DATA.map((program) => (
+          {programs.map((program) => (
             <button
               key={program.id}
               onClick={() => setActiveTabId(program.id)}

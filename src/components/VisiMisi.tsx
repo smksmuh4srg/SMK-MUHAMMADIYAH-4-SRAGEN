@@ -23,7 +23,7 @@ export default function VisiMisi() {
   ];
 
   return (
-    <section id="visimisi" className="py-20 md:py-28 bg-hijau-pastel/30 border-t border-b border-hijau-light/30 scroll-mt-10">
+    <section id="visimisi" className="py-20 md:py-28 bg-gradient-to-b from-hijau-pastel/40 to-hijau-pastel/10 border-t border-b border-hijau-light/20 scroll-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

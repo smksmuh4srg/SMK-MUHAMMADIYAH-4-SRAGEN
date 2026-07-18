@@ -15,10 +15,11 @@ import {
   Map,
   ExternalLink
 } from "lucide-react";
-import { SCHOOL_INFO } from "../data";
+import { useContent } from "../context/ContentContext";
 import { ContactSubmission } from "../types";
 
 export default function Contact() {
+  const { schoolInfo, submitInquiry } = useContent();
   const [formData, setFormData] = useState<ContactSubmission>({
     nama: "",
     email: "",
@@ -40,7 +41,7 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.nama || !formData.telepon || !formData.pesan) {
       alert("Harap lengkapi kolom nama, nomor telepon, dan pesan Anda.");
@@ -48,12 +49,13 @@ export default function Contact() {
     }
 
     setIsSubmitting(true);
-
-    // Simulate sending progress
-    setTimeout(() => {
-      setIsSubmitting(false);
+    const res = await submitInquiry(formData);
+    setIsSubmitting(false);
+    if (res.success) {
       setIsSuccess(true);
-    }, 1200);
+    } else {
+      alert(res.error || "Gagal mengirim pesan, coba lagi nanti.");
+    }
   };
 
   const resetForm = () => {
@@ -71,7 +73,7 @@ export default function Contact() {
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=SMK+Muhammadiyah+4+Sragen`;
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-white scroll-mt-10">
+    <section id="contact" className="py-20 md:py-28 bg-transparent scroll-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -101,7 +103,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Alamat Sekolah</p>
-                    <p className="text-sm sm:text-base text-slate-700 font-medium leading-relaxed mt-0.5">{SCHOOL_INFO.alamat}</p>
+                    <p className="text-sm sm:text-base text-slate-700 font-medium leading-relaxed mt-0.5">{schoolInfo.alamat}</p>
                   </div>
                 </div>
 
@@ -112,7 +114,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Telepon Kantor</p>
-                    <p className="text-sm sm:text-base text-slate-700 font-bold mt-0.5">{SCHOOL_INFO.telepon}</p>
+                    <p className="text-sm sm:text-base text-slate-700 font-bold mt-0.5">{schoolInfo.telepon}</p>
                   </div>
                 </div>
 
@@ -123,7 +125,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Alamat Surel (Email)</p>
-                    <p className="text-sm sm:text-base text-slate-700 font-medium mt-0.5">{SCHOOL_INFO.email}</p>
+                    <p className="text-sm sm:text-base text-slate-700 font-medium mt-0.5">{schoolInfo.email}</p>
                   </div>
                 </div>
 
@@ -134,7 +136,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Jam Pelayanan</p>
-                    <p className="text-sm sm:text-base text-slate-700 font-medium mt-0.5">{SCHOOL_INFO.jamKerja}</p>
+                    <p className="text-sm sm:text-base text-slate-700 font-medium mt-0.5">{schoolInfo.jamKerja}</p>
                   </div>
                 </div>
               </div>
@@ -315,7 +317,7 @@ export default function Contact() {
                   <div>
                     <h3 className="text-2xl font-bold text-slate-800">Terima Kasih, {formData.nama}!</h3>
                     <p className="text-slate-500 mt-2 text-sm sm:text-base font-medium">
-                      Pesan Anda berhasil terkirim. Admin Humas {SCHOOL_INFO.nama} akan menghubungi Anda kembali melalui nomor <strong>{formData.telepon}</strong> atau email Anda sesegera mungkin.
+                      Pesan Anda berhasil terkirim. Admin Humas {schoolInfo.nama} akan menghubungi Anda kembali melalui nomor <strong>{formData.telepon}</strong> atau email Anda sesegera mungkin.
                     </p>
                   </div>
                   

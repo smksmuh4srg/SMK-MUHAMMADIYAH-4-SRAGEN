@@ -5,9 +5,11 @@
 
 import React from "react";
 import { BookOpen, Award, Shield, UserCheck, Heart, Sparkles, Quote, GraduationCap } from "lucide-react";
-import { SCHOOL_INFO, TESTIMONIALS_DATA } from "../data";
+import { useContent } from "../context/ContentContext";
 
 export default function About() {
+  const { schoolInfo, testimonials } = useContent();
+
   const pillars = [
     {
       icon: Shield,
@@ -30,14 +32,14 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-20 md:py-28 bg-white scroll-mt-10">
+    <section id="about" className="py-20 md:py-28 bg-transparent scroll-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 slowmo-reveal" id="about-header">
           <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Tentang Kami</h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Mengenal Lebih Dekat {SCHOOL_INFO.nama}
+            Mengenal Lebih Dekat {schoolInfo.nama}
           </p>
           <div className="h-1.5 w-20 bg-hijau-secondary mx-auto mt-4 rounded-full" />
         </div>
@@ -48,7 +50,7 @@ export default function About() {
           {/* Column Left: Text Description */}
           <div className="lg:col-span-7 space-y-6" id="about-left">
             <h3 className="text-xl sm:text-2xl font-bold text-slate-800 leading-snug">
-              Menghadirkan Pendidikan Vokasi yang Relevan, Berakhlak, dan Inovatif Sejak Tahun {SCHOOL_INFO.tahunBerdiri}
+              Menghadirkan Pendidikan Vokasi yang Relevan, Berakhlak, dan Inovatif Sejak Tahun {schoolInfo.tahunBerdiri}
             </h3>
             <p className="text-slate-600 leading-relaxed">
               <strong>SMK Muhammadiyah 4 Sragen</strong> adalah salah satu lembaga pendidikan kejuruan swasta terkemuka di Sragen, Jawa Tengah. Berdiri di bawah naungan Majelis Pendidikan Dasar dan Menengah Pimpinan Daerah Muhammadiyah Sragen, kami memikul amanah besar untuk membidani lulusan yang unggul lahir batin—kompeten di bidang keahliannya dan memiliki kedalaman spiritual berlandaskan Al-Qur'an dan Sunnah.
@@ -97,14 +99,14 @@ export default function About() {
                   <div className="h-14 w-14 rounded-full bg-slate-200 border-2 border-hijau-primary overflow-hidden flex-shrink-0">
                     <img
                       src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=150"
-                      alt={SCHOOL_INFO.kepalaSekolah}
+                      alt={schoolInfo.kepalaSekolah}
                       referrerPolicy="no-referrer"
                       className="h-full w-full object-cover"
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm sm:text-base">{SCHOOL_INFO.kepalaSekolah}</h4>
-                    <p className="text-xs text-slate-500 font-medium">Kepala {SCHOOL_INFO.nama}</p>
+                    <h4 className="font-bold text-slate-800 text-sm sm:text-base">{schoolInfo.kepalaSekolah}</h4>
+                    <p className="text-xs text-slate-500 font-medium">Kepala {schoolInfo.nama}</p>
                   </div>
                 </div>
               </div>
@@ -117,7 +119,7 @@ export default function About() {
           <div className="max-w-2xl mb-10">
             <h4 className="text-xs font-extrabold tracking-wider text-oranye-primary uppercase mb-2">Pilar Kami</h4>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-              Kenapa Memilih {SCHOOL_INFO.nama}?
+              Kenapa Memilih {schoolInfo.nama}?
             </h3>
           </div>
           
@@ -151,7 +153,7 @@ export default function About() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {TESTIMONIALS_DATA.map((testimonial) => (
+            {testimonials.map((testimonial) => (
               <div
                 key={testimonial.id}
                 className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-xs hover:shadow-md transition-all duration-300 relative flex flex-col justify-between"

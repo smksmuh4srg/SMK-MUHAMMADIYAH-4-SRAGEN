@@ -5,10 +5,11 @@
 
 import React, { useState, useEffect } from "react";
 import { Maximize2, X, ChevronLeft, ChevronRight, Calendar, Tag } from "lucide-react";
-import { GALLERY_DATA } from "../data";
+import { useContent } from "../context/ContentContext";
 import { GalleryItem } from "../types";
 
 export default function Gallery() {
+  const { gallery } = useContent();
   const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -27,12 +28,12 @@ export default function Gallery() {
 
   // Filter items based on active category
   const filteredItems = selectedCategory === "Semua"
-    ? GALLERY_DATA
-    : GALLERY_DATA.filter((item) => item.category === selectedCategory);
+    ? gallery
+    : gallery.filter((item) => item.category === selectedCategory);
 
   const openLightbox = (item: GalleryItem) => {
     // Find index of clicked item in the filtered list
-    const index = GALLERY_DATA.findIndex((g) => g.id === item.id);
+    const index = gallery.findIndex((g) => g.id === item.id);
     if (index !== -1) {
       setLightboxIndex(index);
     }
@@ -44,22 +45,22 @@ export default function Gallery() {
 
   const showNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex + 1) % GALLERY_DATA.length);
+    if (lightboxIndex !== null && gallery.length > 0) {
+      setLightboxIndex((lightboxIndex + 1) % gallery.length);
     }
   };
 
   const showPrev = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex - 1 + GALLERY_DATA.length) % GALLERY_DATA.length);
+    if (lightboxIndex !== null && gallery.length > 0) {
+      setLightboxIndex((lightboxIndex - 1 + gallery.length) % gallery.length);
     }
   };
 
-  const activeLightboxItem = lightboxIndex !== null ? GALLERY_DATA[lightboxIndex] : null;
+  const activeLightboxItem = lightboxIndex !== null && gallery.length > lightboxIndex ? gallery[lightboxIndex] : null;
 
   return (
-    <section id="gallery" className="py-20 md:py-28 bg-hijau-pastel/20 border-t border-b border-hijau-light/30 scroll-mt-10">
+    <section id="gallery" className="py-20 md:py-28 bg-gradient-to-b from-hijau-pastel/30 to-hijau-pastel/10 border-t border-b border-hijau-light/20 scroll-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -225,7 +226,7 @@ export default function Gallery() {
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <span className="text-xs text-slate-400 font-semibold">
-                  {lightboxIndex! + 1} / {GALLERY_DATA.length}
+                  {lightboxIndex! + 1} / {gallery.length}
                 </span>
                 <button
                   onClick={showNext}

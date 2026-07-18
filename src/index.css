@@ -25,12 +25,13 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background-color: #fafdfb;
+  background: linear-gradient(135deg, #d2f0dc 0%, #e8f7ee 50%, #ffffff 100%);
+  background-attachment: fixed;
   color: #1e293b;
 }
 
 .school-gradient-bg {
-  background: linear-gradient(135deg, var(--color-hijau-pastel) 0%, #ffffff 50%, var(--color-oranye-pastel) 100%);
+  background: linear-gradient(135deg, #bfeacc 0%, #daf4e4 60%, #ffffff 100%);
 }
 
 .card-shadow {

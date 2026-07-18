@@ -18,77 +18,26 @@ import {
   ChevronRight,
   Sparkles
 } from "lucide-react";
-import { SCHOOL_INFO } from "../data";
+import { useContent } from "../context/ContentContext";
 
 export default function SPMB() {
+  const { schoolInfo, waves, requirements, selectionResults } = useContent();
   const [activeTab, setActiveTab] = useState<"jadwal" | "syarat" | "biaya">("jadwal");
   const [nisnSearch, setNisnSearch] = useState("");
   const [searchResult, setSearchResult] = useState<any | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Mock selection announcement results
-  const mockSelectionResults: { [key: string]: { nama: string; status: "Lulus" | "Cadangan"; jurusan: string; catatan: string } } = {
-    "1234567890": {
-      nama: "Ananda Rizky Pratama",
-      status: "Lulus",
-      jurusan: "Teknik Komputer & Jaringan (TKJ)",
-      catatan: "Selamat! Anda dinyatakan LULUS SELEKSI UTAMA. Silakan melakukan registrasi ulang pada tanggal 20-25 Juli 2026 di Ruang Panitia SPMB."
-    },
-    "2026010203": {
-      nama: "Siti Aminah",
-      status: "Lulus",
-      jurusan: "Akuntansi & Keuangan Lembaga (AKL)",
-      catatan: "Selamat! Anda dinyatakan LULUS SELEKSI UTAMA. Silakan melakukan registrasi ulang pada tanggal 20-25 Juli 2026 di Ruang Panitia SPMB."
-    },
-    "3039090807": {
-      nama: "Budi Santoso",
-      status: "Cadangan",
-      jurusan: "Teknik Kendaraan Ringan Otomotif (TKRO)",
-      catatan: "Anda dinyatakan masuk dalam daftar CADANGAN. Panitia akan menghubungi Anda jika ada kuota kosong setelah masa daftar ulang gelombang pertama selesai."
-    }
-  };
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!nisnSearch.trim()) return;
 
-    const result = mockSelectionResults[nisnSearch.trim()];
+    const result = selectionResults[nisnSearch.trim()];
     setSearchResult(result || null);
     setHasSearched(true);
   };
 
-  const waves = [
-    {
-      nama: "Gelombang 1 (Unggulan)",
-      tanggal: "01 Januari - 31 Maret 2026",
-      status: "Selesai",
-      colorClass: "border-slate-200 bg-slate-50/50 text-slate-400"
-    },
-    {
-      nama: "Gelombang 2 (Reguler I)",
-      tanggal: "01 April - 30 Juni 2026",
-      status: "Selesai",
-      colorClass: "border-slate-200 bg-slate-50/50 text-slate-400"
-    },
-    {
-      nama: "Gelombang 3 (Reguler II)",
-      tanggal: "01 Juli - 15 Agustus 2026",
-      status: "Sedang Berlangsung",
-      colorClass: "border-hijau-light bg-hijau-pastel/50 text-hijau-primary"
-    }
-  ];
-
-  const requirements = [
-    "Mengisi formulir pendaftaran online maupun offline.",
-    "Fotokopi Ijazah / Surat Keterangan Lulus (SKL) SMP/MTs dilegalisir (2 lembar).",
-    "Fotokopi Kartu Keluarga (KK) dan Akta Kelahiran (2 lembar).",
-    "Pas foto terbaru ukuran 3x4 berwarna (4 lembar).",
-    "Fotokopi kartu penunjang (KIP/KKS/PKH) bagi yang memiliki.",
-    "Menyerahkan fotokopi piagam prestasi akademis/non-akademis (jika ada)."
-  ];
-
   return (
-    <section id="spmb" className="py-20 md:py-28 bg-white scroll-mt-10">
+    <section id="spmb" className="py-20 md:py-28 bg-transparent scroll-mt-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -98,7 +47,7 @@ export default function SPMB() {
             Pendaftaran Siswa Baru (SPMB)
           </p>
           <p className="text-slate-500 mt-3 text-sm sm:text-base font-medium">
-            Bergabunglah bersama keluarga besar {SCHOOL_INFO.nama} untuk meraih masa depan cerah berkarakter mulia.
+            Bergabunglah bersama keluarga besar {schoolInfo.nama} untuk meraih masa depan cerah berkarakter mulia.
           </p>
           <div className="h-1.5 w-20 bg-hijau-secondary mx-auto mt-4 rounded-full" />
         </div>
@@ -155,7 +104,7 @@ export default function SPMB() {
                 {activeTab === "jadwal" && (
                   <div className="space-y-4">
                     <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
-                      Proses seleksi penerimaan siswa baru {SCHOOL_INFO.nama} dibagi dalam 3 gelombang dengan kuota terbatas pada tiap gelombang:
+                      Proses seleksi penerimaan siswa baru {schoolInfo.nama} dibagi dalam 3 gelombang dengan kuota terbatas pada tiap gelombang:
                     </p>
                     <div className="space-y-3">
                       {waves.map((w, index) => (
