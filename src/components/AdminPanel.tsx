@@ -26,7 +26,9 @@ import {
   RefreshCw,
   LogOut,
   Sparkles,
-  ClipboardList
+  ClipboardList,
+  Eye,
+  EyeOff
 } from "lucide-react";
 
 export default function AdminPanel() {
@@ -48,6 +50,7 @@ export default function AdminPanel() {
 
   const [passcode, setPasscode] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [activeSubTab, setActiveSubTab] = useState<
     "profil" | "programs" | "gallery" | "testimonials" | "spmb-config" | "nisn-db" | "pendaftar" | "messages"
   >("profil");
@@ -419,13 +422,23 @@ export default function AdminPanel() {
 
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
-                  <input
-                    type="password"
-                    placeholder="Sandi Admin (Bawaan: admin123)"
-                    value={passcode}
-                    onChange={(e) => setPasscode(e.target.value)}
-                    className="w-full text-center px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-hijau-primary focus:bg-white transition-all font-mono tracking-widest text-slate-700"
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Sandi Admin (Bawaan: yusufromadhoni)"
+                      value={passcode}
+                      onChange={(e) => setPasscode(e.target.value)}
+                      className="w-full text-center pl-10 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-hijau-primary focus:bg-white transition-all font-mono tracking-widest text-slate-700"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 focus:outline-none transition-colors cursor-pointer"
+                      title={showPassword ? "Sembunyikan sandi" : "Tampilkan sandi"}
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
                   {loginError && <p className="text-xs text-red-500 font-bold mt-2">{loginError}</p>}
                 </div>
                 <button

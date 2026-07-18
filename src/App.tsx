@@ -151,7 +151,7 @@ export default function App() {
         <Navbar activeSection="admin" setActiveSection={() => {}} />
 
         {/* 2. Admin Panel Dashboard View */}
-        <main className="flex-grow pt-16 bg-slate-50" id="main-content">
+        <main className="flex-grow pt-16 bg-transparent" id="main-content">
           <AdminPanel />
         </main>
 
