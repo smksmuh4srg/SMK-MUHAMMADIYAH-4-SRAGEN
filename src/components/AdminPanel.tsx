@@ -366,6 +366,30 @@ export default function AdminPanel() {
     }
   };
 
+  const handleDeleteSpmbRegistration = async (id: string) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus data pendaftar ini?")) return;
+    triggerStatus("pendaftar", "saving");
+    const updated = (spmbRegistrations || []).filter((r) => r.id !== id);
+    const res = await updateSection("spmbRegistrations", updated);
+    if (res.success) {
+      triggerStatus("pendaftar", "success", "Data pendaftar berhasil dihapus!");
+    } else {
+      triggerStatus("pendaftar", "error", res.error || "Gagal menghapus");
+    }
+  };
+
+  const handleDeleteInquiry = async (id: string) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus pesan ini?")) return;
+    triggerStatus("messages", "saving");
+    const updated = (inquiries || []).filter((i) => i.id !== id);
+    const res = await updateSection("inquiries", updated);
+    if (res.success) {
+      triggerStatus("messages", "success", "Pesan berhasil dihapus!");
+    } else {
+      triggerStatus("messages", "error", res.error || "Gagal menghapus");
+    }
+  };
+
   // Handle input changes for sub-arrays of Programs
   const handleArrayFieldChange = (field: "keunggulan" | "materiPokok" | "prospekKarir", index: number, value: string) => {
     setTempProgram((prev: any) => {
@@ -655,6 +679,33 @@ export default function AdminPanel() {
                         value={tempProfile.tahunBerdiri}
                         onChange={(e) => setTempProfile({ ...tempProfile, tahunBerdiri: e.target.value })}
                         className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-hijau-primary text-slate-700"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1.5 sm:col-span-2 border-t border-slate-100 pt-6 mt-2">
+                      <h4 className="text-sm font-black text-slate-800 uppercase tracking-wider">Visual Branding & Logo</h4>
+                      <p className="text-xs text-slate-400 font-semibold mb-2">Sesuaikan singkatan lambang serta unggah gambar logo sekolah eksternal jika diinginkan.</p>
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-slate-600 font-bold uppercase text-[10px]">Singkatan / Akronim (e.g. SMK MUHESA)</label>
+                      <input
+                        type="text"
+                        value={tempProfile.acronym || ""}
+                        onChange={(e) => setTempProfile({ ...tempProfile, acronym: e.target.value })}
+                        placeholder="SMK MUHESA"
+                        className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-hijau-primary text-slate-700 font-mono"
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-1.5">
+                      <label className="text-slate-600 font-bold uppercase text-[10px]">URL Gambar Logo Kustom (Kosongkan untuk Default SVG)</label>
+                      <input
+                        type="text"
+                        value={tempProfile.customLogoUrl || ""}
+                        onChange={(e) => setTempProfile({ ...tempProfile, customLogoUrl: e.target.value })}
+                        placeholder="https://example.com/logo.png"
+                        className="p-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-hijau-primary text-slate-700 text-xs font-mono"
                       />
                     </div>
                   </div>
@@ -1487,7 +1538,7 @@ export default function AdminPanel() {
                     <p className="text-xs text-slate-400 font-semibold">Tinjau data pendaftar yang memasukkan formulir online secara langsung via web.</p>
                   </div>
 
-                  <div className="border border-slate-100 rounded-2xl overflow-hidden">
+                   <div className="border border-slate-100 rounded-2xl overflow-hidden">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className="bg-slate-100 border-b border-slate-200 text-slate-500 font-bold uppercase text-[9px] tracking-wider">
@@ -1497,6 +1548,7 @@ export default function AdminPanel() {
                           <th className="p-3">Jurusan Pilihan</th>
                           <th className="p-3">Asal Sekolah</th>
                           <th className="p-3">Kontak WA</th>
+                          <th className="p-3 text-center">Aksi</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100 text-slate-700 font-medium">
@@ -1519,11 +1571,20 @@ export default function AdminPanel() {
                                   <span>{reg.telepon}</span>
                                 </a>
                               </td>
+                              <td className="p-3 text-center">
+                                <button
+                                  onClick={() => handleDeleteSpmbRegistration(reg.id)}
+                                  className="p-1.5 hover:bg-rose-50 rounded-lg text-rose-500 hover:text-rose-700 transition-colors cursor-pointer"
+                                  title="Hapus Pendaftar"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </td>
                             </tr>
                           ))
                         ) : (
                           <tr>
-                            <td colSpan={6} className="p-5 text-center text-slate-400 font-bold">Belum Ada Pendaftar Online Masuk</td>
+                            <td colSpan={7} className="p-5 text-center text-slate-400 font-bold">Belum Ada Pendaftar Online Masuk</td>
                           </tr>
                         )}
                       </tbody>
@@ -1566,6 +1627,14 @@ export default function AdminPanel() {
                                 <Phone className="w-3.5 h-3.5" />
                                 <span>Balas WA ({msg.telepon})</span>
                               </a>
+                              <button
+                                onClick={() => handleDeleteInquiry(msg.id)}
+                                className="text-[11px] font-bold text-rose-500 hover:text-rose-700 hover:bg-rose-50 flex items-center gap-1 border border-rose-200 px-2.5 py-1 rounded-lg cursor-pointer"
+                                title="Hapus Pesan"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                                <span>Hapus</span>
+                              </button>
                             </div>
                           </div>
                           <p className="text-slate-600 font-semibold leading-relaxed">&ldquo;{msg.pesan}&rdquo;</p>

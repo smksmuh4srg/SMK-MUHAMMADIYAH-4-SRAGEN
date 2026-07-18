@@ -32,7 +32,7 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
       ]
     },
     {
-      label: "Program Pendidikan",
+      label: "Akademik",
       id: "program",
       subItems: [
         { label: "Intrakurikuler (Jurusan)", id: "programs" },
@@ -146,21 +146,24 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
   return (
     <header
       id="main-header"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md border-b border-hijau-light/50 shadow-sm py-2"
-          : "bg-transparent py-4"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-300 py-3 md:py-4 px-4 sm:px-6 lg:px-8"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="nav-container">
+      <div
+        className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 rounded-2xl md:rounded-3xl border transition-all duration-300 pointer-events-auto ${
+          isScrolled
+            ? "bg-hijau-dark/95 backdrop-blur-md border-oranye-primary/70 shadow-2xl py-1.5"
+            : "bg-hijau-dark/80 backdrop-blur-md border-white/10 shadow-xl py-3"
+        }`}
+        id="nav-container"
+      >
         <div className="flex items-center justify-between h-16" id="nav-row">
           {/* Logo & Branding */}
           <button
             onClick={() => handleNavClick("home")}
-            className="focus:outline-none transition-transform hover:scale-102"
+            className="focus:outline-none transition-transform hover:scale-102 text-left cursor-pointer"
             id="brand-logo-btn"
           >
-            <SchoolLogo size="md" showText={false} />
+            <SchoolLogo size="md" showText={true} textColorClass="text-white" subColorClass="text-hijau-light/75" />
           </button>
 
           {/* Desktop Navigation */}
@@ -171,10 +174,10 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id!)}
-                    className={`relative px-3 py-2 text-sm font-bold rounded-lg transition-colors duration-200 cursor-pointer ${
+                    className={`relative px-3 py-2 text-sm font-bold rounded-lg transition-all duration-200 cursor-pointer ${
                       activeSection === item.id
-                        ? "text-hijau-primary bg-hijau-light/40"
-                        : "text-slate-600 hover:text-hijau-primary hover:bg-slate-50"
+                        ? "text-white bg-hijau-primary/80 shadow-inner border border-hijau-secondary/30"
+                        : "text-hijau-light/90 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {item.label}
@@ -195,27 +198,27 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
                   onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <button
-                    className={`flex items-center gap-1 px-3 py-2 text-sm font-bold rounded-lg transition-colors duration-200 cursor-pointer ${
+                    className={`flex items-center gap-1 px-3 py-2 text-sm font-bold rounded-lg transition-all duration-200 cursor-pointer ${
                       isSubActive
-                        ? "text-hijau-primary bg-hijau-light/40"
-                        : "text-slate-600 hover:text-hijau-primary hover:bg-slate-50"
+                        ? "text-white bg-hijau-primary/80 shadow-inner border border-hijau-secondary/30"
+                        : "text-hijau-light/90 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" />
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 group-hover:rotate-180 ${isSubActive ? "text-white" : "text-hijau-light/80"}`} />
                   </button>
 
                   {/* Dropdown Menu */}
                   <div className="absolute top-full left-0 pt-2 w-60 z-50 hidden group-hover:block">
-                    <div className="bg-white border border-slate-100/80 rounded-xl shadow-lg py-2 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="bg-hijau-dark/95 backdrop-blur-md border border-hijau-primary/40 rounded-xl shadow-2xl py-2 animate-in fade-in slide-in-from-top-1 duration-150">
                       {item.subItems.map((sub) => (
                         <button
                           key={sub.label}
                           onClick={() => handleSubItemClick(sub)}
-                          className={`block w-full text-left px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors ${
+                          className={`block w-full text-left px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
                             activeSection === sub.id
-                              ? "text-hijau-primary bg-hijau-light/30"
-                              : "text-slate-600 hover:text-hijau-primary hover:bg-slate-50"
+                              ? "text-oranye-primary bg-white/10 font-extrabold"
+                              : "text-white/90 hover:text-oranye-primary hover:bg-white/5"
                           }`}
                         >
                           {sub.label}
@@ -234,14 +237,14 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
               href={`https://wa.me/${schoolInfo.whatsapp}?text=Halo%20SMK%20Muhammadiyah%204%20Sragen%2C%20saya%20ingin%20bertanya%20mengenai%20penerimaan%20siswa%20baru...`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-semibold text-oranye-primary hover:text-oranye-dark bg-oranye-pastel border border-oranye-light px-3 py-2 rounded-lg transition-colors"
+              className="flex items-center gap-1.5 text-xs font-bold text-oranye-primary bg-white hover:bg-oranye-pastel border border-oranye-primary/40 px-3.5 py-2 rounded-lg transition-all shadow-xs hover:scale-102"
             >
               <PhoneCall className="w-3.5 h-3.5" />
               Tanya Admin
             </a>
             <button
               onClick={() => handleNavClick("spmb")}
-              className="flex items-center gap-1.5 text-xs font-bold text-white bg-hijau-primary hover:bg-hijau-secondary px-4 py-2 rounded-lg shadow-sm hover:shadow transition-all"
+              className="flex items-center gap-1.5 text-xs font-bold text-white bg-oranye-primary hover:bg-oranye-secondary px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:scale-102 transition-all cursor-pointer"
             >
               <GraduationCap className="w-4 h-4" />
               Portal SPMB 2026/2027
@@ -252,7 +255,7 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
           <div className="flex lg:hidden" id="mobile-menu-toggle">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-hijau-primary hover:bg-slate-100 focus:outline-none"
+              className="p-2 rounded-lg text-white hover:text-oranye-primary hover:bg-white/10 focus:outline-none transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -261,10 +264,10 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer (Floating iOS style card) */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden animate-in fade-in slide-in-from-top duration-200" id="mobile-drawer">
-          <div className="px-4 pt-2 pb-6 space-y-2 bg-white border-b border-slate-100 shadow-lg max-h-[80vh] overflow-y-auto">
+        <div className="lg:hidden animate-in fade-in slide-in-from-top-4 duration-200 mt-2.5 max-w-7xl mx-auto pointer-events-auto" id="mobile-drawer">
+          <div className="px-5 py-6 space-y-3 bg-hijau-dark/95 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl max-h-[75vh] overflow-y-auto">
             {menuItems.map((item) => {
               if (!item.subItems) {
                 return (
@@ -274,10 +277,10 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
                       handleNavClick(item.id!);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block w-full text-left px-4 py-3 rounded-xl text-base font-bold transition-colors ${
+                    className={`block w-full text-left px-4 py-3 rounded-xl text-base font-bold transition-all ${
                       activeSection === item.id
-                        ? "text-hijau-primary bg-hijau-light font-bold"
-                        : "text-slate-700 hover:text-hijau-primary hover:bg-slate-50"
+                        ? "text-white bg-hijau-primary border border-hijau-secondary/40 shadow-inner font-extrabold"
+                        : "text-white/95 hover:text-oranye-primary hover:bg-white/10"
                     }`}
                   >
                     {item.label}
@@ -294,24 +297,24 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
                     onClick={() => toggleMobileDropdown(item.id)}
                     className={`flex items-center justify-between w-full px-4 py-3 rounded-xl text-base font-bold transition-all ${
                       isSubActive
-                        ? "text-hijau-primary bg-hijau-light/30"
-                        : "text-slate-700 hover:text-hijau-primary hover:bg-slate-50"
+                        ? "text-white bg-hijau-primary/60 border border-hijau-secondary/20"
+                        : "text-white/95 hover:text-oranye-primary hover:bg-white/10"
                     }`}
                   >
                     <span>{item.label}</span>
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180 text-hijau-primary" : "text-slate-400"}`} />
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180 text-oranye-primary" : "text-white/60"}`} />
                   </button>
                   
                   {isOpen && (
-                    <div className="pl-4 pr-2 py-1 space-y-1 bg-slate-50/70 rounded-xl border border-slate-100">
+                    <div className="pl-4 pr-2 py-1 space-y-1 bg-black/20 rounded-xl border border-white/5">
                       {item.subItems.map((sub) => (
                         <button
                           key={sub.label}
                           onClick={() => handleSubItemClick(sub)}
-                          className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                          className={`block w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors cursor-pointer ${
                             activeSection === sub.id
-                              ? "text-hijau-primary bg-hijau-light/40"
-                              : "text-slate-600 hover:text-hijau-primary hover:bg-slate-50"
+                              ? "text-oranye-primary bg-white/15 font-bold"
+                              : "text-white/80 hover:text-oranye-primary hover:bg-white/5"
                           }`}
                         >
                           {sub.label}
@@ -323,12 +326,12 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
               );
             })}
             
-            <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row gap-3">
+            <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row gap-3">
               <a
                 href={`https://wa.me/${schoolInfo.whatsapp}?text=Halo%20SMK%20Muhammadiyah%204%20Sragen...`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full text-sm font-semibold text-oranye-primary bg-oranye-pastel border border-oranye-light px-4 py-3 rounded-xl hover:bg-oranye-light transition-colors"
+                className="flex items-center justify-center gap-2 w-full text-sm font-bold text-oranye-primary bg-white hover:bg-oranye-pastel border border-oranye-primary/30 px-4 py-3.5 rounded-xl transition-all shadow-sm"
               >
                 <PhoneCall className="w-4 h-4" />
                 Hubungi Kami via WA
@@ -338,7 +341,7 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
                   handleNavClick("spmb");
                   setIsMobileMenuOpen(false);
                 }}
-                className="flex items-center justify-center gap-2 w-full text-sm font-bold text-white bg-hijau-primary px-4 py-3 rounded-xl hover:bg-hijau-secondary shadow transition-all"
+                className="flex items-center justify-center gap-2 w-full text-sm font-bold text-white bg-oranye-primary px-4 py-3.5 rounded-xl hover:bg-oranye-secondary shadow-md transition-all cursor-pointer"
               >
                 <GraduationCap className="w-4 h-4" />
                 Daftar SPMB Online

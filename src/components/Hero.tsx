@@ -3,18 +3,68 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from "react";
-import { ArrowRight, GraduationCap, Users, Award, ShieldCheck, BookmarkCheck } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ArrowRight, GraduationCap, Users, Award, ShieldCheck, BookmarkCheck, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react";
 import { useContent } from "../context/ContentContext";
 import schoolHeroImg from "../assets/images/school_hero_campus_1784355094217.jpg";
+import { motion, AnimatePresence } from "motion/react";
 
 interface HeroProps {
   onLearnMore: () => void;
   onRegister: () => void;
 }
 
+const categoryDetails = {
+  Praktek: {
+    label: "Praktek Kejuruan",
+    desc: "Pembelajaran vokasi berbasis kompetensi industri dengan alat modern & standar kerja nyata.",
+    bgColor: "bg-emerald-500",
+    textColor: "text-emerald-500",
+    lightBg: "bg-emerald-50/50"
+  },
+  Fasilitas: {
+    label: "Fasilitas & Sarana",
+    desc: "Gedung modern, laboratorium canggih, masjid sekolah, dan sarana olahraga lengkap.",
+    bgColor: "bg-blue-500",
+    textColor: "text-blue-500",
+    lightBg: "bg-blue-50/50"
+  },
+  Eskul: {
+    label: "Ekstrakurikuler",
+    desc: "Melatih kepemimpinan, bakat, minat, seni, olahraga, dan kepanduan Hizbul Wathan.",
+    bgColor: "bg-amber-500",
+    textColor: "text-amber-500",
+    lightBg: "bg-amber-50/50"
+  },
+  Kegiatan: {
+    label: "Kegiatan Islami & Sosial",
+    desc: "Pembiasaan ibadah harian, kajian keislaman, tadarus, dan kunjungan industri rutin.",
+    bgColor: "bg-violet-500",
+    textColor: "text-violet-500",
+    lightBg: "bg-violet-50/50"
+  },
+  Prestasi: {
+    label: "Prestasi Siswa",
+    desc: "Apresiasi atas torehan juara lomba kompetensi, seni, akademik, dan olahraga tingkat nasional.",
+    bgColor: "bg-rose-500",
+    textColor: "text-rose-500",
+    lightBg: "bg-rose-50/50"
+  }
+};
+
 export default function Hero({ onLearnMore, onRegister }: HeroProps) {
-  const { schoolInfo } = useContent();
+  const { schoolInfo, gallery = [] } = useContent();
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  useEffect(() => {
+    if (!isPlaying || gallery.length === 0) return;
+    const interval = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % gallery.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isPlaying, gallery.length]);
+
   const stats = [
     { label: "Siswa Aktif", value: "850+", icon: Users, color: "text-hijau-primary bg-hijau-light/70" },
     { label: "Akreditasi BAN-SM", value: `A (Unggul)`, icon: ShieldCheck, color: "text-oranye-primary bg-oranye-light/70" },
@@ -78,32 +128,147 @@ export default function Hero({ onLearnMore, onRegister }: HeroProps) {
             </div>
           </div>
 
-          {/* Hero Image Right */}
-          <div className="lg:col-span-5 flex justify-center" id="hero-right">
-            <div className="relative w-full max-w-md lg:max-w-none group" id="hero-image-wrapper">
-              {/* Oranye Background Accent Frame */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-oranye-primary to-oranye-secondary rounded-3xl transform rotate-3 scale-102 opacity-80 blur-xs group-hover:rotate-1 transition-all duration-300" />
+          {/* Hero Slideshow Right */}
+          <div className="lg:col-span-5 flex flex-col justify-center" id="hero-right">
+            <div className="relative w-full max-w-md lg:max-w-none bg-white p-4.5 rounded-3xl shadow-xl border border-slate-100 flex flex-col" id="hero-slideshow-wrapper">
               
-              {/* Image Frame */}
-              <div className="relative bg-white p-2.5 rounded-3xl shadow-xl overflow-hidden transform group-hover:scale-101 transition-all duration-300">
-                <img
-                  src={schoolHeroImg}
-                  alt="SMK Muhammadiyah 4 Sragen Campus"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-[280px] sm:h-[350px] lg:h-[400px] object-cover rounded-2xl"
-                />
-                
-                {/* Floating Badge */}
-                <div className="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-lg border border-slate-100/50 flex items-center gap-3">
-                  <div className="bg-oranye-pastel p-2.5 rounded-lg">
-                    <GraduationCap className="w-6 h-6 text-oranye-primary" />
+              {/* Photo Slideshow Frame with Aspect Ratio */}
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-inner bg-slate-50 group">
+                <AnimatePresence mode="wait">
+                  {gallery.length > 0 ? (
+                    <motion.div
+                      key={currentSlideIndex}
+                      initial={{ opacity: 0, scale: 1.02 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="absolute inset-0 w-full h-full"
+                    >
+                      <img
+                        src={gallery[currentSlideIndex].imageUrl}
+                        alt={gallery[currentSlideIndex].title}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover"
+                      />
+                    </motion.div>
+                  ) : (
+                    <img
+                      src={schoolHeroImg}
+                      alt="SMK Muhammadiyah 4 Sragen Campus"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </AnimatePresence>
+
+                {/* Dark Vignette Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+
+                {/* Top Overlay Badges */}
+                {gallery.length > 0 && (
+                  <div className="absolute top-3 left-3 flex gap-2 items-center z-10">
+                    <span className={`text-[10px] font-extrabold px-3 py-1.5 text-white rounded-lg shadow-sm uppercase tracking-wider flex items-center gap-1.5 ${
+                      categoryDetails[gallery[currentSlideIndex].category as keyof typeof categoryDetails]?.bgColor || "bg-hijau-primary"
+                    }`}>
+                      <span className="h-1.5 w-1.5 bg-white rounded-full animate-pulse" />
+                      {gallery[currentSlideIndex].category}
+                    </span>
                   </div>
-                  <div>
-                    <p className="text-xs text-slate-500 font-medium">Bimbingan Karier</p>
-                    <p className="text-sm font-bold text-slate-800">MoU dengan 20+ Industri</p>
-                  </div>
-                </div>
+                )}
+
+                {/* Manual Navigation Controls */}
+                {gallery.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => {
+                        setCurrentSlideIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+                        setIsPlaying(false);
+                      }}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-slate-800 rounded-full shadow-md backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer duration-200"
+                      title="Sebelumnya"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        setCurrentSlideIndex((prev) => (prev + 1) % gallery.length);
+                        setIsPlaying(false);
+                      }}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-white/90 hover:bg-white text-slate-800 rounded-full shadow-md backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer duration-200"
+                      title="Berikutnya"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Play/Pause Button */}
+                <button
+                  onClick={() => setIsPlaying(!isPlaying)}
+                  className="absolute bottom-3 right-3 w-8 h-8 flex items-center justify-center bg-black/40 hover:bg-black/60 text-white rounded-lg backdrop-blur-xs transition-colors cursor-pointer text-xs z-10"
+                  title={isPlaying ? "Jeda Otomatis" : "Putar Otomatis"}
+                >
+                  {isPlaying ? (
+                    <span className="flex items-center gap-1">
+                      <Pause className="w-3.5 h-3.5" />
+                      <span className="text-[9px] font-bold tracking-wide pr-0.5">AUTO</span>
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1">
+                      <Play className="w-3.5 h-3.5" />
+                      <span className="text-[9px] font-bold tracking-wide pr-0.5">PAUSED</span>
+                    </span>
+                  )}
+                </button>
               </div>
+
+              {/* Photo Caption Details (No Tag selection or Tag description) */}
+              <div className="mt-4 flex-1 flex flex-col justify-between">
+                {gallery.length > 0 ? (
+                  <>
+                    <div>
+                      <div className="bg-slate-50/80 p-4 rounded-2xl border border-slate-100 mb-3">
+                        {/* Specific Image Title & Description */}
+                        <h4 className="font-extrabold text-slate-800 text-sm leading-snug">
+                          {gallery[currentSlideIndex].title}
+                        </h4>
+                        <p className="text-xs text-slate-500 font-medium leading-relaxed mt-2 line-clamp-3">
+                          {gallery[currentSlideIndex].description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Progress Dots */}
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-50">
+                      <span className="text-[10px] font-bold text-slate-400 font-mono">
+                        FOTO {currentSlideIndex + 1} / {gallery.length}
+                      </span>
+                      <div className="flex gap-1">
+                        {gallery.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              setCurrentSlideIndex(idx);
+                              setIsPlaying(false);
+                            }}
+                            className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                              idx === currentSlideIndex
+                                ? "w-4.5 bg-hijau-primary"
+                                : "w-1.5 bg-slate-200 hover:bg-slate-300"
+                            }`}
+                            aria-label={`Go to slide ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center py-6 text-slate-400 text-xs font-bold">
+                    Mengunduh data galeri...
+                  </div>
+                )}
+              </div>
+
             </div>
           </div>
         </div>
@@ -127,3 +292,4 @@ export default function Hero({ onLearnMore, onRegister }: HeroProps) {
     </section>
   );
 }
+

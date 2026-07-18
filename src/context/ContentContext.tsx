@@ -18,6 +18,8 @@ export interface SchoolInfo {
   npsn: string;
   kepalaSekolah: string;
   tahunBerdiri: string;
+  acronym?: string;
+  customLogoUrl?: string;
 }
 
 export interface Wave {
@@ -90,7 +92,9 @@ const FALLBACK_INFO: SchoolInfo = {
   akreditasi: "A",
   npsn: "20314040",
   kepalaSekolah: "Drs. H. Sugiyanto, M.Pd.",
-  tahunBerdiri: "1998"
+  tahunBerdiri: "1998",
+  acronym: "SMK MUHESA",
+  customLogoUrl: ""
 };
 
 export function ContentProvider({ children }: { children: React.ReactNode }) {
