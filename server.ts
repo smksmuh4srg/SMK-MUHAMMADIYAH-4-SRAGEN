@@ -384,7 +384,14 @@ app.post("/api/content/update", (req, res) => {
   const { passcode, section, content } = req.body;
   const adminPasscode = process.env.ADMIN_PASSCODE || "admin123";
 
-  if (passcode !== "yusufromadhoni" && passcode !== "admin" && passcode !== adminPasscode) {
+  const normalizedPass = (passcode || "").trim().toLowerCase();
+  const normalizedAdminPass = adminPasscode.trim().toLowerCase();
+
+  if (
+    normalizedPass !== "yusufromadhoni" &&
+    normalizedPass !== "admin" &&
+    normalizedPass !== normalizedAdminPass
+  ) {
     return res.status(401).json({ error: "Sandi Admin Tidak Valid" });
   }
 
@@ -404,7 +411,14 @@ app.post("/api/login", (req, res) => {
   const { passcode } = req.body;
   const adminPasscode = process.env.ADMIN_PASSCODE || "admin123";
 
-  if (passcode === "yusufromadhoni" || passcode === "admin" || passcode === adminPasscode) {
+  const normalizedPass = (passcode || "").trim().toLowerCase();
+  const normalizedAdminPass = adminPasscode.trim().toLowerCase();
+
+  if (
+    normalizedPass === "yusufromadhoni" ||
+    normalizedPass === "admin" ||
+    normalizedPass === normalizedAdminPass
+  ) {
     res.json({ success: true, token: "admin_token_auth_valid" });
   } else {
     res.status(401).json({ success: false, error: "Sandi Admin Salah!" });

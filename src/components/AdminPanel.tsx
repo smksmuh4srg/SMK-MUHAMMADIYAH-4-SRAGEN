@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useContent } from "../context/ContentContext";
 import {
   Settings,
@@ -110,6 +110,25 @@ export default function AdminPanel() {
     jurusan: "",
     catatan: ""
   });
+
+  // Sync edit states with content loaded from database
+  useEffect(() => {
+    if (schoolInfo && Object.keys(schoolInfo).length > 0) {
+      setTempProfile({ ...schoolInfo });
+    }
+  }, [schoolInfo]);
+
+  useEffect(() => {
+    if (waves && waves.length > 0) {
+      setTempWaves([...waves]);
+    }
+  }, [waves]);
+
+  useEffect(() => {
+    if (requirements && requirements.length > 0) {
+      setTempRequirements([...requirements]);
+    }
+  }, [requirements]);
 
   // Initialize editing functions
   const handleStartEditProfile = () => {

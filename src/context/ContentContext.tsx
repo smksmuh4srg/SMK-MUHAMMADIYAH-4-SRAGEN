@@ -150,9 +150,9 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
     // Immediate client-side check as a bulletproof fallback for yusufromadhoni and admin
     if (trimmedInput === "yusufromadhoni" || trimmedInput === "admin") {
       setIsAdmin(true);
-      setAdminPasscode(passcode);
+      setAdminPasscode(trimmedInput);
       localStorage.setItem("admin_session_token", "admin_token_auth_valid");
-      localStorage.setItem("admin_passcode", passcode);
+      localStorage.setItem("admin_passcode", trimmedInput);
       return { success: true };
     }
 
@@ -160,16 +160,16 @@ export function ContentProvider({ children }: { children: React.ReactNode }) {
       const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ passcode })
+        body: JSON.stringify({ passcode: trimmedInput })
       });
 
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
           setIsAdmin(true);
-          setAdminPasscode(passcode);
+          setAdminPasscode(trimmedInput);
           localStorage.setItem("admin_session_token", data.token);
-          localStorage.setItem("admin_passcode", passcode);
+          localStorage.setItem("admin_passcode", trimmedInput);
           return { success: true };
         }
       }
