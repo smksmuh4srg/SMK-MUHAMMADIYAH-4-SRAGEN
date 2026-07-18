@@ -1,0 +1,6 @@
+{
+  "name": "SMK Muhammadiyah 4 Sragen",
+  "description": "Website profil sekolah modern, responsif, dan profesional untuk SMK Muhammadiyah 4 Sragen dengan nuansa warna hijau pastel dan oranye.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-hijau-pastel: #f0fdf4;
+  --color-hijau-primary: #059669;
+  --color-hijau-secondary: #10b981;
+  --color-hijau-light: #d1fae5;
+  --color-hijau-dark: #064e3b;
+  
+  --color-oranye-primary: #f97316;
+  --color-oranye-secondary: #ea580c;
+  --color-oranye-pastel: #fff7ed;
+  --color-oranye-light: #ffedd5;
+  --color-oranye-dark: #7c2d12;
+}
+
+/* Custom global styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #fafdfb;
+  color: #1e293b;
+}
+
+.school-gradient-bg {
+  background: linear-gradient(135deg, var(--color-hijau-pastel) 0%, #ffffff 50%, var(--color-oranye-pastel) 100%);
+}
+
+.card-shadow {
+  box-shadow: 0 10px 30px -5px rgba(5, 150, 105, 0.05), 0 4px 12px -2px rgba(249, 115, 22, 0.02);
+}
+
+.card-shadow-hover:hover {
+  box-shadow: 0 20px 40px -4px rgba(5, 150, 105, 0.1), 0 8px 16px -2px rgba(249, 115, 22, 0.05);
+}
