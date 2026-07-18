@@ -75,18 +75,18 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16" id="contact-header">
+        <div className="text-center max-w-3xl mx-auto mb-16 slowmo-reveal" id="contact-header">
           <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Hubungi Kami</h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Hubungi atau Kunjungi Kami
           </p>
           <p className="text-slate-500 mt-3 text-sm sm:text-base font-medium">
-            Mempunyai pertanyaan seputar pendaftaran PPDB, program keahlian, atau kemitraan? Kami siap melayani Anda.
+            Mempunyai pertanyaan seputar pendaftaran SPMB, program keahlian, atau kemitraan? Kami siap melayani Anda.
           </p>
           <div className="h-1.5 w-20 bg-hijau-secondary mx-auto mt-4 rounded-full" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12" id="contact-wrapper">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 slowmo-reveal" id="contact-wrapper">
           
           {/* COLUMN 1: Contact Info Details & Map (Left) */}
           <div className="lg:col-span-5 space-y-8" id="contact-left">

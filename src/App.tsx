@@ -15,6 +15,7 @@ import About from "./components/About";
 import VisiMisi from "./components/VisiMisi";
 import Programs from "./components/Programs";
 import Gallery from "./components/Gallery";
+import SPMB from "./components/SPMB";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -44,6 +45,55 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScrollIntersection);
   }, []);
 
+  // Custom slow-motion slide-up animations on scroll reveal
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      {
+        threshold: 0.02,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    const elements = document.querySelectorAll(".slowmo-reveal");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      elements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
+  const slowScrollTo = (targetPosition: number, duration: number = 1400) => {
+    const startPosition = window.scrollY || window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime: number | null = null;
+
+    const easeInOutQuart = (t: number) => {
+      return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+    };
+
+    const animation = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutQuart(progress);
+      
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  };
+
   const handleLearnMore = () => {
     const aboutSection = document.getElementById("about");
     if (aboutSection) {
@@ -53,19 +103,27 @@ export default function App() {
       const elementPosition = elementRect - bodyRect;
       const offsetPosition = elementPosition - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
+      slowScrollTo(offsetPosition, 1600);
       setActiveSection("about");
     }
   };
 
+  const handleRegister = () => {
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      const offset = 80;
+      const bodyRect = document.body.getBoundingClientRect().top;
+      const elementRect = contactSection.getBoundingClientRect().top;
+      const elementPosition = elementRect - bodyRect;
+      const offsetPosition = elementPosition - offset;
+
+      slowScrollTo(offsetPosition, 1650);
+      setActiveSection("contact");
+    }
+  };
+
   const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    slowScrollTo(0, 1650);
     setActiveSection("home");
   };
 
@@ -77,7 +135,7 @@ export default function App() {
       {/* 2. Main Page Content Sections */}
       <main className="flex-grow" id="main-content">
         {/* Hero Section */}
-        <Hero onLearnMore={handleLearnMore} />
+        <Hero onLearnMore={handleLearnMore} onRegister={handleRegister} />
 
         {/* Tentang Sekolah Section */}
         <About />
@@ -90,6 +148,9 @@ export default function App() {
 
         {/* Galeri Dokumentasi Section */}
         <Gallery />
+
+        {/* Penerimaan Siswa Baru Section */}
+        <SPMB />
 
         {/* Kontak & Peta Section */}
         <Contact />

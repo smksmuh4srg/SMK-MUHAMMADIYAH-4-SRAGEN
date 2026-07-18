@@ -28,7 +28,7 @@ export default function Programs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16" id="programs-header">
+        <div className="text-center max-w-3xl mx-auto mb-16 slowmo-reveal" id="programs-header">
           <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Program Studi</h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Program Keahlian Unggulan
@@ -40,7 +40,7 @@ export default function Programs() {
         </div>
 
         {/* Tab Selector buttons */}
-        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12" id="programs-tabs">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 slowmo-reveal" id="programs-tabs">
           {PROGRAMS_DATA.map((program) => (
             <button
               key={program.id}

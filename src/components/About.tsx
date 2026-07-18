@@ -4,8 +4,8 @@
  */
 
 import React from "react";
-import { BookOpen, Award, Shield, UserCheck, Heart, Sparkles } from "lucide-react";
-import { SCHOOL_INFO } from "../data";
+import { BookOpen, Award, Shield, UserCheck, Heart, Sparkles, Quote, GraduationCap } from "lucide-react";
+import { SCHOOL_INFO, TESTIMONIALS_DATA } from "../data";
 
 export default function About() {
   const pillars = [
@@ -34,7 +34,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16" id="about-header">
+        <div className="text-center max-w-3xl mx-auto mb-16 slowmo-reveal" id="about-header">
           <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Tentang Kami</h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Mengenal Lebih Dekat {SCHOOL_INFO.nama}
@@ -43,7 +43,7 @@ export default function About() {
         </div>
 
         {/* Core Description: Two Columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16" id="about-content">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16 slowmo-reveal" id="about-content">
           
           {/* Column Left: Text Description */}
           <div className="lg:col-span-7 space-y-6" id="about-left">
@@ -75,7 +75,7 @@ export default function About() {
           </div>
 
           {/* Column Right: Kepala Sekolah Letter / Card */}
-          <div className="lg:col-span-5" id="about-right">
+          <div className="lg:col-span-5 scroll-mt-28" id="sambutan">
             <div className="relative bg-hijau-pastel/40 border border-hijau-light rounded-3xl p-6 sm:p-8 card-shadow" id="sambutan-card">
               {/* Corner accent */}
               <div className="absolute top-4 right-4 text-hijau-secondary/15">
@@ -113,7 +113,7 @@ export default function About() {
         </div>
 
         {/* Pillars / Key Advantages Grid */}
-        <div className="mt-16 bg-oranye-pastel/30 border border-oranye-light/30 rounded-3xl p-8 lg:p-12" id="about-pillars">
+        <div className="mt-16 bg-oranye-pastel/30 border border-oranye-light/30 rounded-3xl p-8 lg:p-12 slowmo-reveal" id="about-pillars">
           <div className="max-w-2xl mb-10">
             <h4 className="text-xs font-extrabold tracking-wider text-oranye-primary uppercase mb-2">Pilar Kami</h4>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
@@ -132,6 +132,59 @@ export default function About() {
                 </div>
                 <h4 className="text-lg font-bold text-slate-800 mb-3">{pillar.title}</h4>
                 <p className="text-sm text-slate-600 leading-relaxed">{pillar.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Alumni Testimonials Section */}
+        <div className="mt-24 border-t border-slate-100 pt-20 scroll-mt-28 slowmo-reveal" id="alumni">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Testimoni Alumni</h2>
+            <p className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Kisah Sukses Lulusan Kami
+            </p>
+            <p className="text-slate-500 mt-3 text-sm sm:text-base font-medium">
+              Dengar langsung cerita para alumni yang kini telah sukses berkarier di industri terkemuka nasional.
+            </p>
+            <div className="h-1.5 w-16 bg-hijau-secondary mx-auto mt-4 rounded-full" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {TESTIMONIALS_DATA.map((testimonial) => (
+              <div
+                key={testimonial.id}
+                className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-xs hover:shadow-md transition-all duration-300 relative flex flex-col justify-between"
+              >
+                {/* Quote Icon Background */}
+                <div className="absolute top-6 right-6 text-slate-100">
+                  <Quote className="w-10 h-10 rotate-180" />
+                </div>
+
+                <div className="space-y-4 relative z-10">
+                  <div className="text-slate-600 italic text-sm leading-relaxed">
+                    &ldquo;{testimonial.testimoni}&rdquo;
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3.5 pt-6 mt-6 border-t border-slate-100 relative z-10">
+                  <div className="h-12 w-12 rounded-full overflow-hidden border border-slate-100 bg-slate-100 flex-shrink-0">
+                    <img
+                      src={testimonial.avatarUrl}
+                      alt={testimonial.nama}
+                      referrerPolicy="no-referrer"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-slate-800 text-sm">{testimonial.nama}</h5>
+                    <p className="text-xs text-slate-500 font-medium">{testimonial.peran}</p>
+                    <div className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-hijau-primary bg-hijau-light/50 px-2 py-0.5 rounded-md">
+                      <GraduationCap className="w-3 h-3" />
+                      <span>{testimonial.angkatan}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

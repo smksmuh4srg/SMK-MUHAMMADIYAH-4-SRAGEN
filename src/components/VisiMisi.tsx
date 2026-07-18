@@ -27,7 +27,7 @@ export default function VisiMisi() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16" id="visi-header">
+        <div className="text-center max-w-3xl mx-auto mb-16 slowmo-reveal" id="visi-header">
           <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Arah Pendidikan</h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Visi, Misi, dan Tujuan Sekolah
@@ -36,7 +36,7 @@ export default function VisiMisi() {
         </div>
 
         {/* Visi & Misi Interactive Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12" id="visi-misi-grid">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 slowmo-reveal" id="visi-misi-grid">
           
           {/* VISI CARD (Left/Top) */}
           <div className="lg:col-span-5 flex flex-col justify-start" id="visi-card-wrapper">
@@ -112,7 +112,7 @@ export default function VisiMisi() {
         </div>
 
         {/* Goals / Tujuan Section inside VisiMisi */}
-        <div className="mt-16 bg-white border border-slate-100 rounded-3xl p-8 shadow-xs" id="school-goals">
+        <div className="mt-16 bg-white border border-slate-100 rounded-3xl p-8 shadow-xs slowmo-reveal" id="school-goals">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-6 border-b border-slate-100">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-xl bg-oranye-light text-oranye-primary">

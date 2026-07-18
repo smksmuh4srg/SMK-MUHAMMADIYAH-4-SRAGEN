@@ -10,9 +10,10 @@ import schoolHeroImg from "../assets/images/school_hero_campus_1784355094217.jpg
 
 interface HeroProps {
   onLearnMore: () => void;
+  onRegister: () => void;
 }
 
-export default function Hero({ onLearnMore }: HeroProps) {
+export default function Hero({ onLearnMore, onRegister }: HeroProps) {
   const stats = [
     { label: "Siswa Aktif", value: "850+", icon: Users, color: "text-hijau-primary bg-hijau-light/70" },
     { label: "Akreditasi BAN-SM", value: "A (Unggul)", icon: ShieldCheck, color: "text-oranye-primary bg-oranye-light/70" },
@@ -36,14 +37,17 @@ export default function Hero({ onLearnMore }: HeroProps) {
             {/* Tagline / Subtitle */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 self-center lg:self-start bg-hijau-light text-hijau-primary rounded-full text-xs font-semibold tracking-wide mb-6 shadow-xs border border-hijau-secondary/10" id="hero-badge">
               <span className="flex h-2 w-2 rounded-full bg-oranye-primary animate-ping" />
-              Penerimaan Peserta Didik Baru (PPDB) 2026/2027 Dibuka
+              Sistem Penerimaan Murid Baru (SPMB) 2026/2027 Dibuka
             </div>
 
             {/* School Name */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]" id="hero-title">
-              Membangun Masa Depan Bersama{" "}
-              <span className="text-hijau-primary block lg:inline">
-                {SCHOOL_INFO.nama}
+            <h1 className="tracking-tight leading-none" id="hero-title">
+              <span className="text-xl sm:text-2xl md:text-3.5xl font-medium text-slate-500 tracking-wide block mb-0.5 leading-none">
+                Selamat datang
+              </span>
+              <span className="text-4xl sm:text-5xl md:text-6.5xl font-black text-hijau-primary block uppercase leading-[1.05]">
+                SMK MUHAMMADIYAH 4<br />
+                SRAGEN
               </span>
             </h1>
 
@@ -63,14 +67,14 @@ export default function Hero({ onLearnMore }: HeroProps) {
                 Kenali Kami
                 <ArrowRight className="w-5 h-5" />
               </button>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-oranye-pastel text-oranye-primary border-2 border-oranye-light font-semibold rounded-xl shadow-sm hover:shadow transition-all transform hover:-translate-y-0.5"
+              <button
+                onClick={onRegister}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-oranye-pastel text-oranye-primary border-2 border-oranye-light font-semibold rounded-xl shadow-sm hover:shadow transition-all transform hover:-translate-y-0.5 cursor-pointer"
                 id="hero-btn-secondary"
               >
                 <GraduationCap className="w-5 h-5 text-oranye-primary" />
-                Daftar PPDB Online
-              </a>
+                Daftar SPMB Online
+              </button>
             </div>
           </div>
 

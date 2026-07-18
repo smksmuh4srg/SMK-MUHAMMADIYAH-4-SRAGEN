@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Maximize2, X, ChevronLeft, ChevronRight, Calendar, Tag } from "lucide-react";
 import { GALLERY_DATA } from "../data";
 import { GalleryItem } from "../types";
@@ -11,6 +11,17 @@ import { GalleryItem } from "../types";
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const handleNavFilter = (e: Event) => {
+      const category = (e as CustomEvent).detail;
+      if (category) {
+        setSelectedCategory(category);
+      }
+    };
+    window.addEventListener("nav-filter-gallery", handleNavFilter);
+    return () => window.removeEventListener("nav-filter-gallery", handleNavFilter);
+  }, []);
 
   const categories = ["Semua", "Praktek", "Fasilitas", "Eskul", "Kegiatan", "Prestasi"];
 
@@ -52,7 +63,7 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16" id="gallery-header">
+        <div className="text-center max-w-3xl mx-auto mb-16 slowmo-reveal" id="gallery-header">
           <h2 className="text-xs font-bold tracking-widest text-oranye-primary uppercase mb-2">Dokumentasi</h2>
           <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Galeri Kegiatan & Fasilitas
@@ -64,7 +75,7 @@ export default function Gallery() {
         </div>
 
         {/* Filter Tab Row */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12" id="gallery-filters">
+        <div className="flex flex-wrap justify-center gap-2 mb-12 slowmo-reveal" id="gallery-filters">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -81,7 +92,7 @@ export default function Gallery() {
         </div>
 
         {/* Photo Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="gallery-grid">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 slowmo-reveal" id="gallery-grid">
           {filteredItems.map((item) => (
             <div
               key={item.id}
