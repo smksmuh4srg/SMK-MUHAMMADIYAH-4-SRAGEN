@@ -206,20 +206,22 @@ export default function Navbar({ activeSection, setActiveSection }: NavbarProps)
                   </button>
 
                   {/* Dropdown Menu */}
-                  <div className="absolute top-full left-0 mt-1 w-60 bg-white border border-slate-100/80 rounded-xl shadow-lg py-2 animate-in fade-in slide-in-from-top-2 duration-150 z-50 hidden group-hover:block">
-                    {item.subItems.map((sub) => (
-                      <button
-                        key={sub.label}
-                        onClick={() => handleSubItemClick(sub)}
-                        className={`block w-full text-left px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors ${
-                          activeSection === sub.id
-                            ? "text-hijau-primary bg-hijau-light/30"
-                            : "text-slate-600 hover:text-hijau-primary hover:bg-slate-50"
-                        }`}
-                      >
-                        {sub.label}
-                      </button>
-                    ))}
+                  <div className="absolute top-full left-0 pt-2 w-60 z-50 hidden group-hover:block">
+                    <div className="bg-white border border-slate-100/80 rounded-xl shadow-lg py-2 animate-in fade-in slide-in-from-top-1 duration-150">
+                      {item.subItems.map((sub) => (
+                        <button
+                          key={sub.label}
+                          onClick={() => handleSubItemClick(sub)}
+                          className={`block w-full text-left px-4 py-2.5 text-xs sm:text-sm font-semibold transition-colors ${
+                            activeSection === sub.id
+                              ? "text-hijau-primary bg-hijau-light/30"
+                              : "text-slate-600 hover:text-hijau-primary hover:bg-slate-50"
+                          }`}
+                        >
+                          {sub.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               );
